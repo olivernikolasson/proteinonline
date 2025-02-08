@@ -1,3 +1,4 @@
 locals {
-  rg = "RemoteState-rg"
+  rg_dev = "RemoteState-dev-rg"
+  rg_prod = "RemoteState-prod-rg"
 }
