@@ -24,17 +24,6 @@ resource "azurerm_resource_group" "RemoteState-dev-rg" {
   
 }
 
-resource "azurerm_storage_account" "RemoteStateBackend" {
-    name = "remotestateproteinshopdev"
-    location = "West Europe"
-    resource_group_name = local.rg_dev
-    account_tier = "Standard"
-    account_replication_type = "LRS"
-
-}
-
-
-
 resource "azurerm_resource_group" "RemoteState-prod-rg" {
     name = local.rg_prod
     location = "West Europe"
@@ -45,8 +34,19 @@ resource "azurerm_resource_group" "RemoteState-prod-rg" {
   
 }
 
-resource "azurerm_storage_account" "RemoteStateBackend" {
-    name = "remotestateproteinshop"
+resource "azurerm_storage_account" "RemoteStateBackendDev" {
+    name = "rstateproteinshopdev"
+    location = "West Europe"
+    resource_group_name = local.rg_dev
+    account_tier = "Standard"
+    account_replication_type = "LRS"
+
+}
+
+
+
+resource "azurerm_storage_account" "RemoteStateBackendProd" {
+    name = "rstateproteinshopprod"
     location = "West Europe"
     resource_group_name = local.rg_prod
     account_tier = "Standard"
