@@ -1,0 +1,3 @@
+locals {
+  rg = "RemoteState-rg"
+}
