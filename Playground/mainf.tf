@@ -1,8 +1,10 @@
 terraform {
+
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = ">=4.0.0"
+      version = ">= 4.0.0"
+      
     }
   }
 }
@@ -15,12 +17,15 @@ provider "azurerm" {
 }
 
 
+
+
 resource "azurerm_resource_group" "Playground" {
   name     = "Playground"
   location = "West Europe"
   tags = {
     Env         = "Playground"
     Provisioned = "Terraform"
+    workspace = terraform.workspace
 
   }
 
@@ -54,14 +59,20 @@ resource "azurerm_network_interface" "PlaygroundNic" {
 
 
 resource "azurerm_linux_virtual_machine" "Ubuntu" {
-  resource_group_name   = azurerm_resource_group.Playground.name
-  name                  = "ubuntuground1"
-  location              = azurerm_resource_group.Playground.location
-  admin_username        = "bryggan"
-  size                  = "Standard_F2"
-network_interface_ids = [ 
+  resource_group_name = azurerm_resource_group.Playground.name
+  name                = "ubuntuground1"
+  location            = azurerm_resource_group.Playground.location
+  admin_username      = "bygga"
+  admin_password      = "Builder!123!"
+  size                = "Standard_F2"
+  admin_ssh_key {
+    username   = "bygga"
+    public_key = file("~/.ssh/id_rsa.pub")
+
+  }
+  network_interface_ids = [
     azurerm_network_interface.PlaygroundNic.id
- ]
+  ]
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
